@@ -1,0 +1,7 @@
+Write a method to build a tree from the right parenthetic string representation (return the root node of the tree) and a method to construct the left parenthetic string representation of a tree represented by the root node this. Tree is a pointer structure with two pointers to link  the nodes of type Node - pointer to the first child and pointer to the next sibling. Build test trees and print the results in the main-method, do not forget to test a tree that consists of one node only. Node name must be non-empty and must not contain round brackets, commas and whitespace symbols. In case of an invalid input string the parsePostfix method must throw a RuntimeException with meaningful error message.
+
+public static Node parsePostfix (String s)
+public String leftParentheticRepresentation()
+
+Koostage meetodid puu parempoolse suluesituse (String) järgi puu moodustamiseks (parsePostfix, tulemuseks puu juurtipp) ning etteantud puu vasakpoolse suluesituse leidmiseks stringina (puu juureks on tipp this, meetod leftParentheticRepresentation tulemust ei trüki, ainult tagastab String-tüüpi väärtuse). Testige muuhulgas ka ühetipuline puu. Testpuude moodustamine ja tulemuse väljatrükk olgu peameetodis. Puu kujutamisviisina kasutage viidastruktuuri (viidad "esimene alluv" firstChild ja "parem naaber" nextSibling, tipu tüüp on Node). Tipu nimi ei tohi olla tühi ega sisaldada ümarsulge, komasid ega tühikuid. Kui meetodile parsePostfix etteantav sõne on vigane, siis tuleb tekitada asjakohase veateatega RuntimeException.
+
