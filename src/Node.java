@@ -97,22 +97,43 @@ public class Node {
       }
       return buffer.toString();
    }
+   public String toXML(){
+      String leftParenthetic = this.leftParentheticRepresentation();
+      StringBuilder buf = new StringBuilder();
+         int i = 1;
+         buf.append("\n<L" + i + "> ");
+        StringTokenizer tok = new StringTokenizer(leftParenthetic, "(),", true);
+        while (tok.hasMoreTokens()){
+           String token = tok.nextToken().trim();
+           if (token.matches("[A-Z]")){
+              buf.append(token);
+           }
+           else if(token.equals("(")){
+               i++;
+              for (int j = 0; j < i; j++){
+                 buf.append(" ");
+              }
+               buf.append("\n"+"   ".repeat(i-1)+"<L"+i+"> ");
+           }
+           else if(token.equals(")")){
+              buf.append("\n"+"   ".repeat(i-1)+"</L"+i+"> ");
+              i--;
+           }
+           else if (token.equals(",")){
+              buf.append("</L"+i+"> ");
+              buf.append("\n<L"+i+"> ");
+           }
+        }
+      buf.append("\n</L1>");
+      return buf.toString();
+   }
+
    public static void main (String[] param) {
-      String s = "(B1,C)A";
-      String s1 = "A";
-      String s2 = "A(B),(C(E)D)";
-      String s3 = " ";
-      Node t = Node.parsePostfix (s);
-      Node t1 = Node.parsePostfix(s1);
-      Node t2 = Node.parsePostfix(s2);
-      Node t3 = Node.parsePostfix(s3);
-      String v3 = t3.leftParentheticRepresentation();
-      String v2 = t2.leftParentheticRepresentation();
+      String s = "((C)B,(E,F)D,G)A"; // A(B(C(D(E))))     ((A)B,(C)D)E
+      Node t1 = Node.parsePostfix(s);
       String v1 = t1.leftParentheticRepresentation();
-      String v = t.leftParentheticRepresentation();
-      System.out.println (s + " ==> " + v); // (B1,C)A ==> A(B1,C)
-      System.out.println(s1 + " ==> " + v1); // A ==> A
-      System.out.println(s2 + " ==> " + v2); // throws an error
-      System.out.println(s3 + " ==> " + v3); // throws an error
+      String v2 = t1.toXML();
+      System.out.println(v1);
+      System.out.println(v2);
    }
 }
