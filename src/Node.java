@@ -129,7 +129,7 @@ public class Node {
    }
 
    public static void main (String[] param) {
-      String s = "((C)B,(E,F)D,G)A"; // A(B(C(D(E))))     ((A)B,(C)D)E
+      String s = "((C)B,(E,F)D,G)A"; 
       Node t1 = Node.parsePostfix(s);
       String v1 = t1.leftParentheticRepresentation();
       String v2 = t1.toXML();
