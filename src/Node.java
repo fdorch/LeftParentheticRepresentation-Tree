@@ -100,36 +100,36 @@ public class Node {
    public String toXML(){
       String leftParenthetic = this.leftParentheticRepresentation();
       StringBuilder buf = new StringBuilder();
-         int i = 1;
-         buf.append("\n<L" + i + "> ");
-        StringTokenizer tok = new StringTokenizer(leftParenthetic, "(),", true);
-        while (tok.hasMoreTokens()){
-           String token = tok.nextToken().trim();
-           if (token.matches("[A-Z]")){
-              buf.append(token);
-           }
-           else if(token.equals("(")){
-               i++;
-              for (int j = 0; j < i; j++){
-                 buf.append(" ");
-              }
-               buf.append("\n"+"   ".repeat(i-1)+"<L"+i+"> ");
-           }
-           else if(token.equals(")")){
-              buf.append("\n"+"   ".repeat(i-1)+"</L"+i+"> ");
-              i--;
-           }
-           else if (token.equals(",")){
-              buf.append("</L"+i+"> ");
-              buf.append("\n<L"+i+"> ");
-           }
-        }
-      buf.append("\n</L1>");
+      int i = 1;
+      buf.append("\n<L" + i + "> ");
+      StringTokenizer tok = new StringTokenizer(leftParenthetic, "(),", true);
+      while (tok.hasMoreTokens()){
+         String token = tok.nextToken().trim();
+         if (!token.matches("[)(,]")){
+            buf.append(token);
+         }
+         else if(token.equals("(")){
+            i++;
+            for (int j = 0; j < i; j++){
+               buf.append(" ");
+            }
+            buf.append("\n"+"   ".repeat(i-1)+"<L"+i+"> ");
+         }
+         else if(token.equals(")")){
+            buf.append(" ".repeat(i)+"</L"+i+">\n");
+            i--;
+         }
+         else if (token.equals(",")){
+            buf.append(" ".repeat(i)+"</L"+i+">\n");
+            buf.append("  ".repeat(i)+"<L"+i+"> ");
+         }
+      }
+      buf.append("</L1>");
       return buf.toString();
    }
 
    public static void main (String[] param) {
-      String s = "((C)B,(E,F)D,G)A"; 
+      String s = "(50,25)100"; // A(B(C),D(E,F),G)
       Node t1 = Node.parsePostfix(s);
       String v1 = t1.leftParentheticRepresentation();
       String v2 = t1.toXML();
